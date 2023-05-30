@@ -3,6 +3,7 @@ package ibf2022.batch3.csf.day36.weatherserver.services;
 import java.io.StringReader;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -16,10 +17,14 @@ import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 
-import ibf2022.batch3.csf.day36.weatherserver.models.WeatherInfo;;
+import ibf2022.batch3.csf.day36.weatherserver.models.WeatherInfo;
+import ibf2022.batch3.csf.day36.weatherserver.repositories.CityRepository;;
 
 @Service
 public class WeatherService {
+
+	@Autowired
+	private CityRepository cityRepo;
 
 	public static final String URL = "https://api.openweathermap.org/data/2.5/weather";
 
@@ -55,6 +60,14 @@ public class WeatherService {
 				.map(v -> v.asJsonObject())
 				.map(o -> new WeatherInfo(o.getString("main"), o.getString("description"), o.getString("icon")))
 				.toList();
+	}
+
+	public List<String> getCities() {
+		return cityRepo.getCities();
+	}
+
+	public boolean addCity(String city) {
+		return cityRepo.addCity(city);
 	}
 
 }

@@ -8,3 +8,7 @@ export interface WeatherData {
   description: string
   icon: string
 }
+
+export interface CityQuery{
+  city: string
+}

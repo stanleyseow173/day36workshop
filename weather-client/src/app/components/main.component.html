@@ -1,3 +1,18 @@
+<form [formGroup]="formCity" (submit)="addCity()">
+  <label for="city">Add City: </label>
+  <input type="text" id="city" size="30" placeholder="City Name" formControlName="city">
+<button type ="submit" [disabled]="formCity.invalid">Add</button>
+
+</form>
+<hr>
+<h2>Click on cities below to select</h2>
+<div *ngIf="cities$ | async as cities; else blank">
+  <div *ngFor="let c of cities">
+      <a (click)="processClick($event)" id="{{c}}" href="#">{{c|titlecase}} </a>
+  </div>
+</div>
+
+<hr>
 
 <form [formGroup]="form" (submit)="process()">
   <div class="center-it">
@@ -8,7 +23,8 @@
         </td>
         <td>
           <input type="text" id="city" size="30" placeholder="City Name"
-              formControlName="city">
+              formControlName="city" #inputCity>
+            <!--<label #selectedCity>{{cityValue$ | async | titlecase}}</label>-->
         </td>
       </tr>
       <tr>
@@ -35,3 +51,5 @@
     </table>
   </div>
 </form>
+
+<ng-template #blank></ng-template>
